@@ -1,0 +1,50 @@
+System.DefaultWorkingDirectory -> Where an Agent executes a task by Default
+
+BuildDefinitionName -> The alias of the build artifact
+
+Build.SourcesDirectory -> Where agent checkout the source code
+
+Build.ArtifactStagingDirectory -> Where artifacts are archived by default
+
+Build.BuildId -> ID of the build
+
+Build Pipeline
+===========
+1. Add in plan stage:
+commandOptions: '-out $(Build.SourcesDirectory)/tfplanfile'
+
+2. Add in Archive files stage while creating task:
+Root folder or file to archive
+$(Build.SourcesDirectory)
+
+For below line Add “/” in last - 
+rootFolderOrFile: '$(Build.SourcesDirectory)/'
+
+Update below line as false - 
+includeRootFolder: false
+
+3. Add in publish artifact stage while creating task:
+Artifact name:
+$(Build.BuildId)-build
+
+Release Pipeline
+===============
+In Deployment Stage -> Agent Job
+Select Agent pool:
+Azure Pipelines
+Select Agent Specification:
+Ubuntu latest
+
+In Deployment Stage -> Extract Files
+Add below Archive file patterns:
+_$(Build.DefinitionName)/$(Build.BuildId)-build/$(Build.BuildId).zip
+Add below in Destination folder:
+'$(System.DefaultWorkingDirectory)/'
+
+In Deployment Stage -> For Terraform: init & Terraform: apply
+Add below in Configuration directory:
+'$(System.DefaultWorkingDirectory)/'
+
+In Deployment Stage -> For Terraform: apply
+Add below in Additional command arguments:
+--auto-approve
