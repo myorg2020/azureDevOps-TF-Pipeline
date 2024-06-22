@@ -8,4 +8,17 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-   
+
+For PR Pipeline.
+
+pr:
+  - main
+  - releases/*
+
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
