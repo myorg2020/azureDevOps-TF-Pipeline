@@ -22,3 +22,6 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
+
+Branches -> main (main branch) -> click on three dots -> Branch Policies -> Under Build Validation -> click on + (Add new build Policy) -> Under Build Pipeline field, select your Pipeline for which you want to setup for PR Pipeline -> Trigger, Automatic -> Policy requirement, Required -> Select , Save
+Make some changes in a new branch and create a PR to target branch, main -> PR Pipeline will trigger
